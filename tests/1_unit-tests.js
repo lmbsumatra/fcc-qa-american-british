@@ -7,7 +7,6 @@ suite('Unit Tests', () => {
   
   const translator = new Translator();
 
-  // American to British translations
   test('Translate "Mangoes are my favorite fruit." to British English', () => {
     const input = 'Mangoes are my favorite fruit.';
     const expected = 'Mangoes are my <span class="highlight">favourite</span> fruit.';
@@ -78,7 +77,6 @@ suite('Unit Tests', () => {
     assert.equal(result.translation, expected);
   });
 
-  // British to American translations
   test('Translate "We watched the footie match for a while." to American English', () => {
     const input = 'We watched the footie match for a while.';
     const expected = 'We watched the <span class="highlight">soccer</span> match for a while.';
@@ -149,7 +147,6 @@ suite('Unit Tests', () => {
     assert.equal(result.translation, expected);
   });
 
-  // Highlight tests
   test('Highlight translation in "Mangoes are my favorite fruit."', () => {
     const input = 'Mangoes are my favorite fruit.';
     const result = translator.translate(input, 'american-to-british');

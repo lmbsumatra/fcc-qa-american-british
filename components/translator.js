@@ -9,12 +9,10 @@ class Translator {
     let translatedText = text;
     const translations = [];
 
-    // Handle titles/honorifics
     Object.keys(americanToBritishTitles).forEach(title => {
       const americanTitle = title;
       const britishTitle = americanToBritishTitles[title];
       
-      // Match titles with word boundaries and case insensitive
       const regex = new RegExp(`\\b${americanTitle.replace('.', '\\.')}(?=\\s)`, 'gi');
       translatedText = translatedText.replace(regex, (match) => {
         translations.push({ original: match, translated: britishTitle });
@@ -22,7 +20,6 @@ class Translator {
       });
     });
 
-    // Handle American-only terms (sort by length descending to handle longer phrases first)
     const americanTerms = Object.keys(americanOnly).sort((a, b) => b.length - a.length);
     americanTerms.forEach(term => {
       const britishEquivalent = americanOnly[term];
@@ -34,7 +31,6 @@ class Translator {
       });
     });
 
-    // Handle American to British spelling (sort by length descending)
     const americanWords = Object.keys(americanToBritishSpelling).sort((a, b) => b.length - a.length);
     americanWords.forEach(americanWord => {
       const britishWord = americanToBritishSpelling[americanWord];
@@ -46,7 +42,6 @@ class Translator {
       });
     });
 
-    // Handle time format (American 10:30 to British 10.30)
     const timeRegex = /\b(\d{1,2}):(\d{2})\b/g;
     translatedText = translatedText.replace(timeRegex, (match, hours, minutes) => {
       const britishTime = `${hours}.${minutes}`;
@@ -61,11 +56,9 @@ class Translator {
     let translatedText = text;
     const translations = [];
 
-    // Handle titles/honorifics (reverse mapping)
     Object.keys(americanToBritishTitles).forEach(americanTitle => {
       const britishTitle = americanToBritishTitles[americanTitle];
       
-      // Match British titles and convert to American
       const regex = new RegExp(`\\b${britishTitle.replace('.', '\\.')}(?=\\s)`, 'gi');
       translatedText = translatedText.replace(regex, (match) => {
         translations.push({ original: match, translated: americanTitle });
@@ -73,7 +66,6 @@ class Translator {
       });
     });
 
-    // Handle British-only terms (sort by length descending to handle longer phrases first)
     const britishTerms = Object.keys(britishOnly).sort((a, b) => b.length - a.length);
     britishTerms.forEach(term => {
       const americanEquivalent = britishOnly[term];
@@ -85,10 +77,8 @@ class Translator {
       });
     });
 
-    // Handle British to American spelling (reverse mapping, sort by length descending)
     const britishWords = Object.values(americanToBritishSpelling).sort((a, b) => b.length - a.length);
     britishWords.forEach(britishWord => {
-      // Find the corresponding American word
       const americanWord = Object.keys(americanToBritishSpelling).find(key => 
         americanToBritishSpelling[key] === britishWord
       );
@@ -102,7 +92,6 @@ class Translator {
       }
     });
 
-    // Handle time format (British 10.30 to American 10:30)
     const timeRegex = /\b(\d{1,2})\.(\d{2})\b/g;
     translatedText = translatedText.replace(timeRegex, (match, hours, minutes) => {
       const americanTime = `${hours}:${minutes}`;
